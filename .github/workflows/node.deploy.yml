@@ -2,6 +2,9 @@ name: AWS DEPLOY TO STAGING
 # turn off deploy to AWS
 #comment
 on:
+  push:
+    branches:
+      -dev #added comment
   pull_request:
     types: [closed]
     branches:
