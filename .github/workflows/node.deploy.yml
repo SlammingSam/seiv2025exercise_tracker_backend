@@ -2,6 +2,7 @@ name: AWS DEPLOY TO STAGING
 # turn off deploy to AWS
 #comment
 on:
+  workflow_dispatch:
   push:
     branches:
       -dev #added comment
