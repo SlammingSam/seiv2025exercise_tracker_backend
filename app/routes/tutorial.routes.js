@@ -1,4 +1,4 @@
-  import tutorials from "../controllers/tutorial.controller.js";
+  import tutorials from "../controllers/plan.controller.js";
   import authenticate from "../authorization/authorization.js";
   import { Router } from "express";
   var router = Router()

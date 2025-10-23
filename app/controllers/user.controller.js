@@ -18,6 +18,7 @@ exports.create = (req, res) => {
     fName: req.body.fName,
     lName: req.body.lName,
     email: req.body.email,
+    role: req.body.role
     // refresh_token: req.body.refresh_token,
     // expiration_date: req.body.expiration_date
   };
@@ -36,8 +37,7 @@ exports.create = (req, res) => {
 
 // Retrieve all People from the database.
 exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+  const id = req.params.id;
 
   User.findAll({ where: condition })
     .then((data) => {

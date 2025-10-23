@@ -4,7 +4,6 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 const Goal = SequelizeInstance.define("goal", {
     user_id: {
           type: Sequelize.STRING,
-          primaryKey: true,
           references:{
             model: 'user',
             key: 'id',

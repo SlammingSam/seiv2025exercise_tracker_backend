@@ -1,16 +1,16 @@
-  import lessons from "../controllers/lesson.controller.js";
+  import goals from "../controllers/goal.controller.js";
   import authenticate from "../authorization/authorization.js";
   import { Router } from "express";
   var router = Router()
 
   // Create a new Lesson for a Tutorial
-  router.post("/:tutorialId/lessons/", [authenticate], lessons.create);
+  router.post("/:userId/goals/", [authenticate], goals.create);
 
   // Retrieve all Lessons for a Tutorial
   router.get(
-    "/:tutorialId/lessons/",
+    "/: userId/goals/",
     [authenticate],
-    lessons.findAllForTutorial
+    goals.findAllForUser
   );
 
   // Retrieve all published Lessons for a Tutorial

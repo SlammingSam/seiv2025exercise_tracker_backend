@@ -33,7 +33,7 @@ exports.create = (req, res) => {
 };
 // Retrieve all goals from the database.
 exports.findAll = (req, res) => {
-  const goalId = req.query.goalId;
+  const goalId = req.params.goalId;
   var condition = goalId
     ? {
         goalId: {
@@ -54,9 +54,9 @@ exports.findAll = (req, res) => {
 };
 // Retrieve all goals for a user from the database.
 exports.findAllForUser = (req, res) => {
-  const userId = req.query.userId;
+  const userId = req.params.userId;
 
-  Goal.findAll({ where: { tutorialId: tutorialId } })
+  Goal.findAll({ where: { userId: userId } })
     .then((data) => {
       res.send(data);
     })
@@ -66,10 +66,10 @@ exports.findAllForUser = (req, res) => {
       });
     });
 };
-// Find a single Lesson with an id
+// Find a single goal_id with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Lesson.findByPk(id)
+  Goal.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
@@ -85,10 +85,10 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// Update a Lesson by the id in the request
+// Update a Goal by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Lesson.update(req.body, {
+  Goal.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -132,19 +132,6 @@ exports.delete = (req, res) => {
     });
 };
 
-// Find all published Lessons
-exports.findAllPublished = (req, res) => {
-  const lessonId = req.query.lessonId;
 
-  Lesson.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving lessons.",
-      });
-    });
-};
 
 export default exports;

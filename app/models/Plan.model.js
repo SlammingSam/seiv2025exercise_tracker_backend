@@ -4,6 +4,7 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 const Plan = SequelizeInstance.define("plan", {
     plan_id: {
       type: Sequelize.STRING,
+      primaryKey: true,
     },
     description: {
       type: Sequelize.STRING,
