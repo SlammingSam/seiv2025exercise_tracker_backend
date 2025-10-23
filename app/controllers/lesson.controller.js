@@ -1,5 +1,5 @@
-import db  from "../models/index.js";
-const Lesson = db.lesson;
+const db = require("../models/index.js")
+const Goal = db.goal;
 const Op = db.Sequelize.Op;
 const exports = {};
 // Create and Save a new Lesson
@@ -13,14 +13,14 @@ exports.create = (req, res) => {
   }
 
   // Create a Lesson
-  const lesson = {
-    tutorialId: req.params.tutorialId,
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+  const goal = {
+    user_id: req.body.userId,
+    goal_id: req.body.goalId,
+    name: req.body.name,
+    status: req.body.status,
   };
-  // Save Lesson in the database
-  Lesson.create(lesson)
+  // Save Goal in the database
+  Goal.create(goal)
     .then((data) => {
       res.send(data);
     })
@@ -31,18 +31,18 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all Lessons from the database.
+// Retrieve all goals from the database.
 exports.findAll = (req, res) => {
-  const lessonId = req.query.lessonId;
-  var condition = lessonId
+  const goalId = req.query.goalId;
+  var condition = goalId
     ? {
-        lessonId: {
-          [Op.like]: `%${lessonId}%`,
+        goalId: {
+          [Op.like]: `%${goalId}%`,
         },
       }
     : null;
 
-  Lesson.findAll({ where: condition })
+  Goal.findAll()
     .then((data) => {
       res.send(data);
     })
@@ -52,11 +52,11 @@ exports.findAll = (req, res) => {
       });
     });
 };
-// Retrieve all Lessons for a tutorial from the database.
-exports.findAllForTutorial = (req, res) => {
-  const tutorialId = req.params.tutorialId;
+// Retrieve all goals for a user from the database.
+exports.findAllForUser = (req, res) => {
+  const userId = req.query.userId;
 
-  Lesson.findAll({ where: { tutorialId: tutorialId } })
+  Goal.findAll({ where: { tutorialId: tutorialId } })
     .then((data) => {
       res.send(data);
     })

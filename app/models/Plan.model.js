@@ -1,16 +1,16 @@
 import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
-const Lesson = SequelizeInstance.define("lesson", {
-    title: {
+const Plan = SequelizeInstance.define("plan", {
+    plan_id: {
       type: Sequelize.STRING,
     },
     description: {
       type: Sequelize.STRING,
     },
-    published: {
-      type: Sequelize.BOOLEAN,
+    name: {
+      type: Sequelize.STRING,
     },
   });
 
-export default Lesson;
+export default Plan;
