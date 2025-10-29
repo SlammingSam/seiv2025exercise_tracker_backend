@@ -1,16 +1,11 @@
-const db = require("../models/index.js")
+import db from"../models/index.js"
 const Goal = db.goal;
 const Op = db.Sequelize.Op;
 const exports = {};
-// Create and Save a new Lesson
+// Create and Save a new goal
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+
 
   // Create a Lesson
   const goal = {
@@ -33,15 +28,6 @@ exports.create = (req, res) => {
 };
 // Retrieve all goals from the database.
 exports.findAll = (req, res) => {
-  const goalId = req.params.goalId;
-  var condition = goalId
-    ? {
-        goalId: {
-          [Op.like]: `%${goalId}%`,
-        },
-      }
-    : null;
-
   Goal.findAll()
     .then((data) => {
       res.send(data);
@@ -111,7 +97,7 @@ exports.update = (req, res) => {
 // Delete a Lesson with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Lesson.destroy({
+  Goal.destroy({
     where: { id: id },
   })
     .then((num) => {

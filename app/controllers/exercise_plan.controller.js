@@ -1,16 +1,11 @@
-const db = require("../models/index.js")
+import db from "../models/index.js"
 const Exercise_Plan = db.exercise_plan;
 const Op = db.Sequelize.Op;
 const exports = {};
 // Create and Save a new Exercise Plan
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+
 
   // Create a Exercise Plan
   const exercise_plan = {

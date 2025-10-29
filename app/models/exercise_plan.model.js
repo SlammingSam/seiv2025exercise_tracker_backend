@@ -3,7 +3,7 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 
 const Exercise = SequelizeInstance.define("exercise", {
     exercise_id: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
         model: 'exercise',
@@ -11,7 +11,7 @@ const Exercise = SequelizeInstance.define("exercise", {
       }
     },
     plan_id: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
         model: 'plan',
@@ -19,7 +19,7 @@ const Exercise = SequelizeInstance.define("exercise", {
       }
     },
     goal_id: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
         model: 'goal',

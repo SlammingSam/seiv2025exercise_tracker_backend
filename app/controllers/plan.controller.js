@@ -1,16 +1,11 @@
-const db = require("../models/index.js")
+import db from "../models/index.js"
+import express, { json, urlencoded } from "express"
 const Plan = db.plan;
 const Op = db.Sequelize.Op;
 const exports = {};
 // Create and Save a new plan
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
 
   // Create a plan
   const plan = {

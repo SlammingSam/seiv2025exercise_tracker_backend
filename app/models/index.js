@@ -1,8 +1,10 @@
-import dbConfig from "../config/db.config.js";
+
 import { Sequelize } from "sequelize";
 import sequelize from "../config/sequelizeInstance.js";
 
 // Models
+//on Delete
+
 
 import User from "./user.model.js";
 import Session from "./session.model.js";
@@ -60,7 +62,7 @@ db.plan.belongsTo(
 
 //foreign key for exercise plans
 db.goal.hasMany(
-  db.exercise_plan
+  db.exercise_plan,
   { as: "exercise plan" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );

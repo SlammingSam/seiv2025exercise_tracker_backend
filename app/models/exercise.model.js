@@ -3,7 +3,7 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 
 const Exercise = SequelizeInstance.define("exercise", {
     exercise_id: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       primaryKey: true
     },
     name: {

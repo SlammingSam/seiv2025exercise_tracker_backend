@@ -1,4 +1,4 @@
-import 'dotenv/config';
+
 
 const db_host = process.env.DB_HOST;
 const db_pw = process.env.DB_PW;
@@ -19,4 +19,4 @@ module.exports = {
   },
 };
 
-export default dbConfig;
+
