@@ -26,51 +26,23 @@ db.exercise = Exercise;
 db.exercise_plan = Exercise_Plan;
 
 // foreign key for session
-db.user.hasMany(
-  db.session,
-  { as: "session" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.session.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// foreign key for session
+db.user.hasMany(db.session, { as: "session", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.session.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 
 // foreign key for goals
-db.user.hasMany(
-  db.goal,
-  { as: "goal" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.goal.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// foreign key for goals
+db.user.hasMany(db.goal, { as: "goal", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.goal.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 //foreign key for plans
-db.user.hasMany(
-  db.plan,
-  { as: "plan" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.plan.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// foreign key for plans
+db.user.hasMany(db.plan, { as: "plan", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.plan.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 
 //foreign key for exercise plans
-db.goal.hasMany(
-  db.exercise_plan,
-  { as: "exercise plan" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.exercise_plan.belongsTo(
-  db.goal,
-  { as: "goal" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// foreign key for exercise plans
+db.goal.hasMany(db.exercise_plan, { as: "exercise_plan", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.exercise_plan.belongsTo(db.goal, { as: "goal", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 
 
 

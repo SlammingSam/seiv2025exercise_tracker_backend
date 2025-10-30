@@ -3,15 +3,16 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 
 const Goal = SequelizeInstance.define("goal", {
     user_id: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           references:{
-            model: 'user',
+            model: 'users',
             key: 'id',
           }
         },
     goal_id: {
-      type: Sequelize.STRING,
-      primaryKey: true
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     status: {
       type: Sequelize.ENUM,

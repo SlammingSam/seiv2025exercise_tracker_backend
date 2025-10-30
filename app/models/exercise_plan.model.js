@@ -1,12 +1,12 @@
 import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
-const Exercise = SequelizeInstance.define("exercise", {
+const Exercise = SequelizeInstance.define("exercise_plan", {
     exercise_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
-        model: 'exercise',
+        model: 'exercises',
         key: 'exercise_id',
       }
     },
@@ -14,7 +14,7 @@ const Exercise = SequelizeInstance.define("exercise", {
       type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
-        model: 'plan',
+        model: 'plans',
         key: 'plan_id',
       }
     },
@@ -22,7 +22,7 @@ const Exercise = SequelizeInstance.define("exercise", {
       type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
-        model: 'goal',
+        model: 'goals',
         key: 'goal_id',
       }
     },

@@ -4,7 +4,8 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 const Exercise = SequelizeInstance.define("exercise", {
     exercise_id: {
       type: Sequelize.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true,
     },
     name: {
       type: Sequelize.STRING,
