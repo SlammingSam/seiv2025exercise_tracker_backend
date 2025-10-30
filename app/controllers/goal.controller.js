@@ -1,26 +1,21 @@
-import db  from "../models/index.js";
-const Lesson = db.lesson;
+import db from"../models/index.js"
+const Goal = db.goal;
 const Op = db.Sequelize.Op;
 const exports = {};
-// Create and Save a new Lesson
+// Create and Save a new goal
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
+
 
   // Create a Lesson
-  const lesson = {
-    tutorialId: req.params.tutorialId,
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+  const goal = {
+    user_id: req.body.userId,
+    goal_id: req.body.goalId,
+    name: req.body.name,
+    status: req.body.status,
   };
-  // Save Lesson in the database
-  Lesson.create(lesson)
+  // Save Goal in the database
+  Goal.create(goal)
     .then((data) => {
       res.send(data);
     })
@@ -31,18 +26,9 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all Lessons from the database.
+// Retrieve all goals from the database.
 exports.findAll = (req, res) => {
-  const lessonId = req.query.lessonId;
-  var condition = lessonId
-    ? {
-        lessonId: {
-          [Op.like]: `%${lessonId}%`,
-        },
-      }
-    : null;
-
-  Lesson.findAll({ where: condition })
+  Goal.findAll()
     .then((data) => {
       res.send(data);
     })
@@ -52,11 +38,11 @@ exports.findAll = (req, res) => {
       });
     });
 };
-// Retrieve all Lessons for a tutorial from the database.
-exports.findAllForTutorial = (req, res) => {
-  const tutorialId = req.params.tutorialId;
+// Retrieve all goals for a user from the database.
+exports.findAllForUser = (req, res) => {
+  const userId = req.params.userId;
 
-  Lesson.findAll({ where: { tutorialId: tutorialId } })
+  Goal.findAll({ where: { userId: userId } })
     .then((data) => {
       res.send(data);
     })
@@ -66,10 +52,10 @@ exports.findAllForTutorial = (req, res) => {
       });
     });
 };
-// Find a single Lesson with an id
+// Find a single goal_id with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Lesson.findByPk(id)
+  Goal.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
@@ -85,10 +71,10 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// Update a Lesson by the id in the request
+// Update a Goal by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Lesson.update(req.body, {
+  Goal.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -111,7 +97,7 @@ exports.update = (req, res) => {
 // Delete a Lesson with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Lesson.destroy({
+  Goal.destroy({
     where: { id: id },
   })
     .then((num) => {
@@ -132,19 +118,6 @@ exports.delete = (req, res) => {
     });
 };
 
-// Find all published Lessons
-exports.findAllPublished = (req, res) => {
-  const lessonId = req.query.lessonId;
 
-  Lesson.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving lessons.",
-      });
-    });
-};
 
 export default exports;

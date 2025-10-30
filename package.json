@@ -1,8 +1,7 @@
 {
-  "type": "module",
-  "name": "tutorial-backend",
+  "name": "exercise_tracker-backend",
   "version": "1.0.0",
-  "description": "Tutorial Node.js with Rest API",
+  "description": "Exercise Node.js with Rest API",
   "main": "server.js",
   "scripts": {
     "test": "jest --",
@@ -20,7 +19,7 @@
     "audit": "^0.0.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
+    "express": "^4.21.2",
     "googleapis": "^100.0.0",
     "jest": "^29.3.1",
     "jsonwebtoken": "^9.0.2",

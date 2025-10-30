@@ -2,15 +2,19 @@ import { Router } from "express";
 
 import AuthRoutes from "./auth.routes.js";
 import UserRoutes from "./user.routes.js";
-import TutorialRoutes from "./tutorial.routes.js";
-import LessonRoutes from "./lesson.routes.js";
+import GoalRoutes from "./goal.routes.js";
+import PlanRoutes from "./plan.routes.js";
+import ExerciseRoutes from "./exercise.routes.js"
+import ExercisePlanRoutes from "./exercise_plan.routes.js"
 
 
 const router = Router();
 
 router.use("/", AuthRoutes);
 router.use("/users", UserRoutes);
-router.use("/tutorials", TutorialRoutes);
-router.use("/tutorials", LessonRoutes);
+router.use("/goals", GoalRoutes);
+router.use("/plans", PlanRoutes);
+router.use("/exercises", ExerciseRoutes);
+router.use("/exercise_plans", ExercisePlanRoutes)
 
 export default router;

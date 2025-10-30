@@ -4,8 +4,8 @@ import SequelizeInstance from "../config/sequelizeInstance.js";
 const Session = SequelizeInstance.define("sessions", {
     id: {
       type: Sequelize.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
     },
     token: {
       type: Sequelize.STRING(3000),
