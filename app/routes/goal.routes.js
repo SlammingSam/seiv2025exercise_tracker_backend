@@ -3,8 +3,8 @@
   import { Router } from "express";
   var router = Router()
 
-  // Create a new goal for a user
-  router.post("/:userId", goals.create);
+  // Create a new goal 
+  router.post("/", goals.create);
 
   // Retrieve all goals for a user
   router.get(
