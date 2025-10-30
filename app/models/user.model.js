@@ -19,6 +19,7 @@ const User = SequelizeInstance.define("user", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
   role: {
     type: Sequelize.ENUM,
