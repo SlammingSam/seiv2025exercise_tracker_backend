@@ -8,10 +8,9 @@ exports.create = (req, res) => {
 
   // Create a exercise
   const exercise = {
-    user_id: req.body.userId,
-    exercise_id: req.body.exerciseId,
     name: req.body.name,
-    status: req.body.status,
+    sets: req.body.sets,
+    reps: req.body.reps,
   };
   // Save exercise in the database
   Exercise.create(exercise)
