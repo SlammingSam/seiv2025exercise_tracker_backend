@@ -3,30 +3,30 @@
   import { Router } from "express";
   var router = Router()
 
-  // Create a new goal for a user
-  router.post("/:userId", [authenticate], goals.create);
+  // Create a new goal 
+  router.post("/", goals.create);
 
   // Retrieve all goals for a user
   router.get(
     "/:userId",
-    [authenticate],
+    
     goals.findAllForUser
   );
 
   // Retrieve a single goal by ID
   router.get(
     "/:id",
-    [authenticate],
+   
     goals.findOne
   );
 
   //retrieve all goals
-  router.get("/", [authenticate], goals.findAll);
+  router.get("/",  goals.findAll);
 
   // Update a goal with id
-  router.put("/:id", [authenticate], goals.update);
+  router.put("/:id",  goals.update);
 
   // Delete a goal with id
-  router.delete("/:id", [authenticate], goals.delete);
+  router.delete("/:id",  goals.delete);
 
 export default router
