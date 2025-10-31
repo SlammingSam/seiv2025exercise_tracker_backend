@@ -10,7 +10,7 @@ import User from "./user.model.js";
 import Session from "./session.model.js";
 import Goal from "./goal.model.js";
 import Plan from "./plan.model.js"; 
-import Exercise from "./Exercise.model.js";
+import Exercise from "./exercise.model.js";
 import Exercise_Plan from "./exercise_plan.model.js"
 
 
