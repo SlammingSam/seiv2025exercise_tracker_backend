@@ -15,11 +15,9 @@ const google_id = process.env.CLIENT_ID;
 const exports = {};
 
 exports.login = async (req, res) => {
- 
 
   var googleToken = req.body.credential;
 
- 
   const client = new OAuth2Client(google_id);
   async function verify() {
     const ticket = await client.verifyIdToken({
@@ -28,6 +26,7 @@ exports.login = async (req, res) => {
     });
     googleUser = ticket.getPayload();
     console.log("Google payload is " + JSON.stringify(googleUser));
+    //return googleUser;
   }
   await verify().catch(console.error);
 
@@ -56,7 +55,6 @@ exports.login = async (req, res) => {
     lastName = data.family_name;
   }
 
-
   let user = {};
   let session = {};
 
@@ -82,38 +80,37 @@ exports.login = async (req, res) => {
     });
 
   // this lets us get the user id
-  if (user.id === undefined) {
-  
-    await User.create(user)
-      .then((data) => {
-        user = data.dataValues;
-        res.status(200).send({ message: "User was registered successfully!" });
-        return
-      })
-      .catch((err) => {
-        res.status(500).send({ message: err.message });
-        return;
-      });
-  } else {
-    
-    // doing this to ensure that the user's name is the one listed with Google
-    user.fName = firstName;
-    user.lName = lastName;
-  
-    await User.update(user, { where: { id: user.id } })
-      .then((num) => {
-        if (num == 1) {
-          console.log("updated user's name");
-        } else {
-          console.log(
-            `Cannot update User with id=${user.id}. Maybe User was not found or req.body is empty!`
-          );
-        }
-      })
-      .catch((err) => {
-        console.log("Error updating User with id=" + user.id + " " + err);
-      });
+if (user.id === undefined) {
+  console.log(user);
+
+  try {
+    const data = await User.create(user);
+    user = data.dataValues;
+    return res.status(200).send({ message: "User was registered successfully!" });
+  } catch (err) {
+    console.error("Error creating user:", err);
+    return res.status(500).send({ message: err.message });
   }
+
+} else {
+  // ensure that the user's name matches Google
+  user.fName = firstName;
+  user.lName = lastName;
+
+  try {
+    const num = await User.update(user, { where: { id: user.id } });
+    if (num == 1) {
+      console.log("Updated user's name");
+    } else {
+      console.log(`Cannot update User with id=${user.id}.`);
+    }
+    // ✅ Send one consistent response here
+    return res.status(200).send({ message: "User updated successfully!" });
+  } catch (err) {
+    console.error("Error updating User:", err);
+    return res.status(500).send({ message: err.message });
+  }
+}
 
   // try to find session first
 
