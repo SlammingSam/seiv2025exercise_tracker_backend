@@ -298,7 +298,7 @@ exports.logout = async (req, res) => {
   // invalidate session -- delete token out of session table
   let session = {};
 
-  await Session.findAll({ where: { token: req.body.token } })
+  await Session.findOne({ where: { token: req.body.token } })//had to change findAll to findOne to make it stop crashing
     .then((data) => {
       if (data[0] !== undefined) session = data[0].dataValues;
     })
@@ -341,4 +341,5 @@ exports.logout = async (req, res) => {
     });
   }
 };
+
 export default exports;
