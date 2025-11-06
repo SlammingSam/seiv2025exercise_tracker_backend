@@ -1,5 +1,5 @@
 import db from"../models/index.js"
-const Exercise = db.exercise;
+const exercise = db.exercise;
 const Op = db.Sequelize.Op;
 const exports = {};
 // Create and Save a new exercise
@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     reps: req.body.reps,
   };
   // Save exercise in the database
-  Exercise.create(exercise)
+  exercise.create(exercise)
     .then((data) => {
       res.send(data);
     })
