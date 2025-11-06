@@ -6,7 +6,7 @@ import cors from "cors";
 
 import db  from "./app/models/index.js";
 
-db.sequelize.sync({force: true});
+db.sequelize.sync();
 
 const app = express();
 
