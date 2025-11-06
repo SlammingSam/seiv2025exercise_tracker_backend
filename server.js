@@ -6,7 +6,7 @@ import cors from "cors";
 
 import db  from "./app/models/index.js";
 
-db.sequelize.sync();
+db.sequelize.sync({alter: true});
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
   
 // Load the routes from the routes folder
-app.use("/exercise_tracker", routes); 
+app.use("/tracker-t4", routes); 
 
 
 // set port, listen for requests
