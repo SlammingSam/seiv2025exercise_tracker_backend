@@ -34,7 +34,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const id = req.params.id;
 
-  User.findAll({ where: condition })
+  User.findAll()
     .then((data) => {
       res.send(data);
     })
