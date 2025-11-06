@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "exercise_tracker-backend",
   "version": "1.0.0",
   "description": "Exercise Node.js with Rest API",
