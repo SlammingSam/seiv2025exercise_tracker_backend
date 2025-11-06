@@ -1,5 +1,5 @@
 import db from"../models/index.js"
-const exercise = db.exercise;
+const Exercise = db.exercise;
 const Op = db.Sequelize.Op;
 const exports = {};
 // Create and Save a new exercise
@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     reps: req.body.reps,
   };
   // Save exercise in the database
-  exercise.create(exercise)
+  Exercise.create(exercise)
     .then((data) => {
       res.send(data);
     })
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 
 
-  exercise.findAll()
+  Exercise.findAll()
     .then((data) => {
       res.send(data);
     })
@@ -41,7 +41,7 @@ exports.findAll = (req, res) => {
 // Retrieve all exercises for a exercise plan from the database.
 exports.findAllForExercisePlan = (req, res) => {
  const exercisePlanId = req.params.exercisePlanId;
-  exercise.findAll({ where: { exercisePlanId: exercisePlanId } })
+  Exercise.findAll({ where: { exercisePlanId: exercisePlanId } })
     .then((data) => {
       res.send(data);
     })
@@ -54,7 +54,7 @@ exports.findAllForExercisePlan = (req, res) => {
 // Find a single exercise_id with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  exercise.findByPk(id)
+  Exercise.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
@@ -73,7 +73,7 @@ exports.findOne = (req, res) => {
 // Update a exercise by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  exercise.update(req.body, {
+  Exercise.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -96,7 +96,7 @@ exports.update = (req, res) => {
 // Delete a exercise with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  exercise.destroy({
+  Exercise.destroy({
     where: { id: id },
   })
     .then((num) => {

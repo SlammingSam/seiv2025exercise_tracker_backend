@@ -15,7 +15,6 @@
   // Retrieve a single exercise plan by ID
   router.get(
     "/:id",
-    [authenticate],
     exercise_plans.findOne
   );
 
