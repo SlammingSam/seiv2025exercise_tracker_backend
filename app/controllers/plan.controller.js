@@ -9,8 +9,8 @@ exports.create = (req, res) => {
 
   // Create a plan
   const plan = {
-    plan_id: req.body.userId,
-    description: req.body.goalId,
+    plan_id: req.body.plan_id,
+    description: req.body.description,
     name: req.body.name,
   };
   // Save Goal in the database
