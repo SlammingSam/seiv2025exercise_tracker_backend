@@ -15,11 +15,9 @@ const google_id = process.env.CLIENT_ID;
 const exports = {};
 
 exports.login = async (req, res) => {
- 
 
   var googleToken = req.body.credential;
 
- 
   const client = new OAuth2Client(google_id);
   async function verify() {
     const ticket = await client.verifyIdToken({
@@ -28,16 +26,23 @@ exports.login = async (req, res) => {
     });
     googleUser = ticket.getPayload();
     console.log("Google payload is " + JSON.stringify(googleUser));
+    //return googleUser; //why is this commented?
   }
   await verify().catch(console.error);
 
+  //console.log(googleUser.email);//working
+  //console.log(googleUser.given_name);//working
+  //console.log(googleUser.family_name);//working
   let email = googleUser.email;
   let firstName = googleUser.given_name;
   let lastName = googleUser.family_name;
+  //console.log(email);//working
+  //console.log(firstName);//working
+  //console.log(lastName);//working
 
   // if we don't have their email or name, we need to make another request
   // this is solely for testing purposes
-  if (
+  /*if (
     (email === undefined ||
       firstName === undefined ||
       lastName === undefined) &&
@@ -54,8 +59,7 @@ exports.login = async (req, res) => {
     email = data.email;
     firstName = data.given_name;
     lastName = data.family_name;
-  }
-
+  }*/
 
   let user = {};
   let session = {};
@@ -80,43 +84,55 @@ exports.login = async (req, res) => {
     .catch((err) => {
       res.status(500).send({ message: err.message });
     });
+    //console.log(user.email);//working
+    //console.log(user.fName);//working
+    //console.log(user.lName);//working
+    //console.log("user ID =" + user.id);//working, auto included?
 
   // this lets us get the user id
-  if (user.id === undefined) {
-  
-    await User.create(user)
-      .then((data) => {
-        user = data.dataValues;
-        res.status(200).send({ message: "User was registered successfully!" });
-        return
-      })
-      .catch((err) => {
-        res.status(500).send({ message: err.message });
-        return;
-      });
-  } else {
-    
-    // doing this to ensure that the user's name is the one listed with Google
+  if (user.id === undefined) 
+  {
+  console.log(user);
+
+  try {
+    const data = await User.create(user);
+    user = data.dataValues;
+    return res.status(200).send({ message: "User was registered successfully!" });
+  } catch (err) {
+    console.error("Error creating user:", err);
+    return res.status(500).send({ message: err.message });
+  }
+
+  } 
+  else 
+  {
+    //console.log(user.fName + " " + firstName); //working
+    //console.log(user.lName + " " + lastName);  //working
+    // ensure that the user's name matches Google
     user.fName = firstName;
     user.lName = lastName;
-  
-    await User.update(user, { where: { id: user.id } })
-      .then((num) => {
-        if (num == 1) {
-          console.log("updated user's name");
-        } else {
-          console.log(
-            `Cannot update User with id=${user.id}. Maybe User was not found or req.body is empty!`
-          );
-        }
-      })
-      .catch((err) => {
-        console.log("Error updating User with id=" + user.id + " " + err);
-      });
+
+    try 
+    {
+      const num = await User.update(user, { where: { id: user.id } });
+      if (num == 1) {
+        console.log("Updated user's name");
+      } else {
+        console.log(`Cannot update User with id=${user.id}.`);
+      }
+      //message that is getting sent to console, I modified and then removed it since it was blocking execution
+                                 //added this user being sent back with this response
+      //return res.status(200).send({ user: {user}, message: "User updated successfully!" });
+    } 
+    catch (err) 
+    {
+      console.error("Error updating User:", err);
+      return res.status(500).send({ message: err.message });
+    }
   }
 
   // try to find session first
-
+  //console.log("got here"); //working
   await Session.findOne({
     where: {
       email: email,
@@ -187,7 +203,7 @@ exports.login = async (req, res) => {
     };
 
     console.log("making a new session");
-    console.log(session);
+    console.log("session: " + session);
 
     await Session.create(session)
       .then(() => {
@@ -200,7 +216,7 @@ exports.login = async (req, res) => {
           // refresh_token: user.refresh_token,
           // expiration_date: user.expiration_date
         };
-        console.log(userInfo);
+        console.log("userInfo: " + userInfo);
         res.send(userInfo);
       })
       .catch((err) => {
