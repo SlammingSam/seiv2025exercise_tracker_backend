@@ -2,13 +2,10 @@ import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
 const Exercise = SequelizeInstance.define("exercise_plan", {
-    exercise_id: {
+    exercise_plan_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
-      references:{
-        model: 'exercises',
-        key: 'exercise_id',
-      }
+      autoIncrement: true
     },
     plan_id: {
       type: Sequelize.INTEGER,
