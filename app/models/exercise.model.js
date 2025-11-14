@@ -11,7 +11,7 @@ const Exercise = SequelizeInstance.define("exercise", {
       type: Sequelize.INTEGER,
       primaryKey: true,
       references:{
-        model: 'exercise_plan',
+        model: 'exercise_plans',
         key: 'exercise_plan_id',
       }
     },
