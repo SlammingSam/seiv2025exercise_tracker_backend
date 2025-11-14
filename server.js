@@ -1,12 +1,12 @@
 
 import 'dotenv/config';
-import routes from "./app/routes/index.js";
 import express, { json, urlencoded } from "express"
 import cors from "cors";
-
 import db  from "./app/models/index.js";
 
-db.sequelize.sync({alter: true});
+import routes from "./app/routes/index.js";
+
+db.sequelize.sync({force: true});
 
 const app = express();
 

@@ -7,13 +7,13 @@ const Exercise = SequelizeInstance.define("exercise", {
       primaryKey: true,
       autoIncrement: true,
     },
-    exercise_plan_id:{
+    exercise_plan_id: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
-      references:{
+      allowNull: true,
+      references: {
         model: 'exercise_plans',
         key: 'exercise_plan_id',
-      }
+      },
     },
     name: {
       type: Sequelize.STRING,
@@ -24,6 +24,11 @@ const Exercise = SequelizeInstance.define("exercise", {
     reps: {
       type: Sequelize.INTEGER,
     },
+    status: {
+          type: Sequelize.ENUM,
+          values: ['complete', 'in-progress', 'not started'],
+          allowNull: false,
+        },
   });
    
 export default Exercise;
