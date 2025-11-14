@@ -8,6 +8,15 @@ const User = SequelizeInstance.define("user", {
     autoIncrement: true,
     primaryKey: true,
   },
+  team_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references:{
+            model: 'teams',
+            key: 'team_id',
+          }
+        },
+  
   fName: {
     type: Sequelize.STRING,
     allowNull: false,

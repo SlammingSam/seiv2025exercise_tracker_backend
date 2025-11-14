@@ -1,55 +1,54 @@
-import db from "../models/index.js"
-import express, { json, urlencoded } from "express"
-const Plan = db.plan;
+import db from"../models/index.js"
+const Goal = db.goal;
 const Op = db.Sequelize.Op;
 const exports = {};
-// Create and Save a new plan
+// Create and Save a new goal
 exports.create = (req, res) => {
   // Validate request
 
-  // Create a plan
-  const plan = {
-    plan_id: req.body.plan_id,
-    description: req.body.description,
+
+  // Create a Lesson
+  const goal = {
+    user_id: req.body.userId,
+    goal_id: req.body.goalId,
     name: req.body.name,
+    status: req.body.status,
   };
   // Save Goal in the database
-  Plan.create(plan)
+  Goal.create(goal)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the plans.",
+          err.message || "Some error occurred while creating the Lesson.",
       });
     });
 };
 // Retrieve all goals from the database.
 exports.findAll = (req, res) => {
-  const planId = req.params.planId;
-  
-  Plan.findAll()
+  Goal.findAll()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving plans.",
+        message: err.message || "Some error occurred while retrieving lessons.",
       });
     });
 };
 // Retrieve all goals for a user from the database.
-exports.findAllForExercisePlan = (req, res) => {
-  const exercisePlanId = req.params.exercisePlanId;
+exports.findAllForUser = (req, res) => {
+  const userId = req.params.userId;
 
-  Plan.findAll({ where: { exercisePlanId: exercisePlanId } })
+  Goal.findAll({ where: { userId: userId } })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving plans.",
+        message: err.message || "Some error occurred while retrieving lessons.",
       });
     });
 };
@@ -62,59 +61,59 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find plan with id=${id}.`,
+          message: `Cannot find Lesson with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving plan with id=" + id,
+        message: "Error retrieving Lesson with id=" + id,
       });
     });
 };
 // Update a Goal by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Plan.update(req.body, {
+  Goal.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "plan was updated successfully.",
+          message: "Lesson was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update plan with id=${id}. Maybe plan was not found or req.body is empty!`,
+          message: `Cannot update Lesson with id=${id}. Maybe Lesson was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating plan with id=" + id,
+        message: "Error updating Lesson with id=" + id,
       });
     });
 };
-// Delete a plan with the specified id in the request
+// Delete a Lesson with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  plan.destroy({
+  Goal.destroy({
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "plan was deleted successfully!",
+          message: "Lesson was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete plan with id=${id}. Maybe plan was not found!`,
+          message: `Cannot delete Lesson with id=${id}. Maybe Lesson was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete plan with id=" + id,
+        message: "Could not delete Lesson with id=" + id,
       });
     });
 };

@@ -10,7 +10,7 @@ exports.create = (req, res) => {
   // Create a Exercise Plan
   const exercise_plan = {
     plan_id: req.body.plan_id,
-    exercise_plan_id: req.body.exercise_planId,
+    exercise_plan_id: req.body.exercise_plan_id,
     goal_id: req.body.goal_id
   };
   // Save Exercise_Plan in the database

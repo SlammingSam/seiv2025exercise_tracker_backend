@@ -5,12 +5,18 @@ const exports = {};
 // Create and Save a new exercise
 exports.create = (req, res) => {
   // Validate request
+    console.log('Exercise.create body:', req.body);
+    if (req.body.exercise_plan_id === undefined || req.body.exercise_plan_id === null) {
+      return res.status(400).send({ message: 'exercise_plan_id is required' });
+    }
 
   // Create a exercise
   const exercise = {
     name: req.body.name,
     sets: req.body.sets,
     reps: req.body.reps,
+    status: req.body.status,
+    exercise_plan_id: req.body.exercise_plan_id,
   };
   // Save exercise in the database
   Exercise.create(exercise)
@@ -41,7 +47,7 @@ exports.findAll = (req, res) => {
 // Retrieve all exercises for a exercise plan from the database.
 exports.findAllForExercisePlan = (req, res) => {
  const exercisePlanId = req.params.exercisePlanId;
-  Exercise.findAll({ where: { exercisePlanId: exercisePlanId } })
+  Exercise.findAll({ where: { exercise_plan_id: exercisePlanId } })
     .then((data) => {
       res.send(data);
     })
