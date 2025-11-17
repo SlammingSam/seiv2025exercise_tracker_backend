@@ -9,7 +9,6 @@ const Exercise = SequelizeInstance.define("exercise", {
     },
     exercise_plan_id: {
       type: Sequelize.INTEGER,
-      allowNull: true,
       references: {
         model: 'exercise_plans',
         key: 'exercise_plan_id',
