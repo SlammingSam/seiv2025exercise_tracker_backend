@@ -19,12 +19,12 @@
   );
 
   //retrieve all exercise_plans
-  router.get("/",  exercise_plans.findAll);
+  router.get("/" [authenticate],  exercise_plans.findAll);
 
   // Update a goal with id
-  router.put("/:id",  exercise_plans.update);
+  router.put("/:id" [authenticate],  exercise_plans.update);
 
   // Delete a goal with id
-  router.delete("/:id",  exercise_plans.delete);
+  router.delete("/:id" [authenticate],  exercise_plans.delete);
 
 export default router

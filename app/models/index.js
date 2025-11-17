@@ -23,8 +23,8 @@ db.user = User;
 db.session = Session;
 db.goal = Goal;
 db.plan = Plan;
-db.exercise = Exercise;
 db.exercise_plan = Exercise_Plan;
+db.exercise = Exercise;
 db.team = Team;
 
 // foreign key for session
@@ -52,7 +52,7 @@ db.user.belongsTo(db.team, { as: "team", foreignKey: "team_id", onDelete: "CASCA
 // team may reference an owner user (user_id) but create the constraint without enforcing
 // at sync time to avoid circular FK creation. This sets up the association but disables
 // automatic constraint creation so Sequelize won't try to create both FKs in a cycle.
-db.team.belongsTo(db.user, { as: "owner", foreignKey: "user_id", constraints: false });
+db.exercise.hasMany(db.exercise,{as:"exercises", foreignKey:"exercise_plan_id", onDelete:"CASCADE", foreignKeyConstraint:true});
 
 
 
