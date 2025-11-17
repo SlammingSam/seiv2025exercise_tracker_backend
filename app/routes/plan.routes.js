@@ -14,7 +14,7 @@
 
   // Retrieve all plans from exercise plan
   router.get(
-    "/:exercise_planId",
+    "/:exercise_planId", 
     plans.findAllForExercisePlan
   );
 
@@ -22,9 +22,9 @@
   router.get("/:id", plans.findOne);
 
   // Update a goal with id
-  router.put("/:id",  plans.update);
+  router.put("/:id", plans.update);
 
   // Delete a Lesson with id
-  router.delete("/:id",  plans.delete);
+  router.delete("/:id", plans.delete);
 
 export default router

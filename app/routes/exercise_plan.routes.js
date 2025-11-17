@@ -4,11 +4,11 @@
   var router = Router()
 
   // Create a new exercise plan for a user
-  router.post("/", exercise_plans.create);
+  router.post("/", [authenticate], exercise_plans.create);
 
   // Retrieve all exercise plans for a user
   router.get(
-    "/:userId",
+    "/:userId", [authenticate],
     exercise_plans.findAllForUser
   );
 
@@ -22,9 +22,9 @@
   router.get("/",  exercise_plans.findAll);
 
   // Update a goal with id
-  router.put("/:id",  exercise_plans.update);
+  router.put("/:id", [authenticate],  exercise_plans.update);
 
   // Delete a goal with id
-  router.delete("/:id",  exercise_plans.delete);
+  router.delete("/:id", [authenticate],  exercise_plans.delete);
 
 export default router

@@ -1,15 +1,17 @@
 import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
-const Exercise = SequelizeInstance.define("exercise_plan", {
+const Exercise_Plan = SequelizeInstance.define("exercise_plan", {
     exercise_plan_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+
       autoIncrement: true //cant auto increment a composite key JULIANNNNNNNNNNNNNNNNNNNNNNNNNNNNNN!
     },
     plan_id: {
       type: Sequelize.INTEGER,
       //primaryKey: true,
+
       references:{
         model: 'plans',
         key: 'plan_id',
@@ -17,7 +19,6 @@ const Exercise = SequelizeInstance.define("exercise_plan", {
     },
     goal_id: {
       type: Sequelize.INTEGER,
-      //primaryKey: true,
       references:{
         model: 'goals',
         key: 'goal_id',
@@ -25,4 +26,4 @@ const Exercise = SequelizeInstance.define("exercise_plan", {
     },
   });
    
-export default Exercise;
+export default Exercise_Plan;

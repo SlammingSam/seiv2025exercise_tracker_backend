@@ -8,7 +8,7 @@
   router.post("/",  users.create);
 
   // Retrieve all People
-  router.get("/",  users.findAll);
+  router.get("/", users.findAll);
 
   // Retrieve a single User with id
   router.get("/:id",  users.findOne);
