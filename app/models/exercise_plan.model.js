@@ -5,11 +5,11 @@ const Exercise = SequelizeInstance.define("exercise_plan", {
     exercise_plan_id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true //cant auto increment a composite key JULIANNNNNNNNNNNNNNNNNNNNNNNNNNNNNN!
     },
     plan_id: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
+      //primaryKey: true,
       references:{
         model: 'plans',
         key: 'plan_id',
@@ -17,7 +17,7 @@ const Exercise = SequelizeInstance.define("exercise_plan", {
     },
     goal_id: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
+      //primaryKey: true,
       references:{
         model: 'goals',
         key: 'goal_id',
