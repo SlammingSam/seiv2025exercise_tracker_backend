@@ -14,12 +14,12 @@
 
   // Retrieve a single exercise plan by ID
   router.get(
-    "/:id", [authenticate],
+    "/:id",
     exercise_plans.findOne
   );
 
   //retrieve all exercise_plans
-  router.get("/", [authenticate],  exercise_plans.findAll);
+  router.get("/",  exercise_plans.findAll);
 
   // Update a goal with id
   router.put("/:id", [authenticate],  exercise_plans.update);

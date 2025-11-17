@@ -21,12 +21,12 @@
   );
 
   //retrieve all goals
-  router.get("/", [authenticate],  goals.findAll);
+  router.get("/",  goals.findAll);
 
   // Update a goal with id
-  router.put("/:id", [authenticate],  goals.update);
+  router.put("/:id",  goals.update);
 
   // Delete a goal with id
-  router.delete("/:id", [authenticate],  goals.delete);
+  router.delete("/:id",  goals.delete);
 
 export default router

@@ -6,13 +6,13 @@
 
 
   // Login
-  router.post("/login", [authenticate], auth.login);
+  router.post("/login", auth.login);
 
   // Authorization
-  router.post("/authorize/:id", [authenticate], auth.authorize);
+  router.post("/authorize/:id", auth.authorize);
 
   // Logout
-  router.post("/logout", [authenticate], auth.logout);
+  router.post("/logout", auth.logout);
 
  export default router
 
