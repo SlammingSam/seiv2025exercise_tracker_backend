@@ -27,6 +27,15 @@ const Exercise_Plan = SequelizeInstance.define("exercise_plan", {
         model: 'goals',
         key: 'goal_id',
       },
+    
+         user_id: {
+      allowNull: true,
+      defaultValue: null,
+      type: Sequelize.INTEGER,
+      references:{
+        model: 'goals',
+        key: 'goal_id',
+      },
       
     },
   });
