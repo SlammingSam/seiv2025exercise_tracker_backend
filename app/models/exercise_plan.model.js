@@ -38,6 +38,7 @@ const Exercise_Plan = SequelizeInstance.define("exercise_plan", {
       },
       
     },
+  }
   });
    
 export default Exercise_Plan;
