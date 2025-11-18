@@ -13,6 +13,7 @@ const Exercise_Plan = SequelizeInstance.define("exercise_plan", {
         model: 'plans',
         key: 'plan_id',
       }
+      defaultValue: null;
     },
     goal_id: {
       type: Sequelize.INTEGER,

@@ -4,11 +4,11 @@
   var router = Router()
 
   // Create a new plan
-  router.post("/", [authenticate],exercises.create);
+  router.post("/",exercises.create);
 
   // Retrieve all plans
   router.get(
-    "/", [authenticate],
+    "/",
     
     exercises.findAll
   );
