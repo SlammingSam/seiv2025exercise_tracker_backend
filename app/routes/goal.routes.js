@@ -5,14 +5,9 @@
 
   // Create a new goal 
   router.post("/", goals.create);
+   router.get("/",  goals.findAll);
 
   // Retrieve all goals for a user
-  router.get(
-    "/:userId",
-    
-    goals.findAllForUser
-  );
-
   // Retrieve a single goal by ID
   router.get(
     "/:id",
@@ -21,7 +16,6 @@
   );
 
   //retrieve all goals
-  router.get("/",  goals.findAll);
 
   // Update a goal with id
   router.put("/:id",  goals.update);

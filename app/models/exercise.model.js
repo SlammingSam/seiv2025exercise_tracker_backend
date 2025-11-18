@@ -8,6 +8,7 @@ const Exercise = SequelizeInstance.define("exercise", {
       autoIncrement: true,
     },
     exercise_plan_id: {
+      allowNull: true,
       type: Sequelize.INTEGER,
       references: {
         model: 'exercise_plans',
@@ -26,7 +27,7 @@ const Exercise = SequelizeInstance.define("exercise", {
     status: {
           type: Sequelize.ENUM,
           values: ['complete', 'in-progress', 'not started'],
-          allowNull: false,
+          defaultValue: 'not started',
         },
   });
    
