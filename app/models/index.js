@@ -39,11 +39,14 @@ db.goal.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCA
 //foreign key for plans
 // foreign key for plans
 db.user.hasMany(db.plan, { as: "plan", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
-db.plan.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.plan.belongsTo(db., { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 
 //foreign key for exercise plans
 // foreign key for exercise plans
 db.goal.hasMany(db.exercise_plan, { as: "exercise_plan", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.exercise_plan.belongsTo(db.goal, { as: "goal", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+
+db.plan.hasMany(db.exercise_plan, { as: "exercise_plan", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 db.exercise_plan.belongsTo(db.goal, { as: "goal", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 
 // foreign key for teams
