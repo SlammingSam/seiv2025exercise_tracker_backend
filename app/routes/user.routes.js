@@ -11,9 +11,8 @@
   router.get("/", users.findAll);
 
   // Retrieve a single User with id
-  router.get("/:id",  users.findOne);
+  router.get("/:id",  users.findById);
 
-  router.get("/:email", users.findOneByEmail);
 
   // Update a User with id
   router.put("/:id", users.update);
@@ -21,6 +20,8 @@
   // Delete a User with id
   router.delete("/:id",  users.delete);
 
+  
+  router.get("/:email", users.findByEmail);
 
   export default router;
 

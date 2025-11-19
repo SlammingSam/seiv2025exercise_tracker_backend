@@ -4,7 +4,7 @@
   var router = Router()
 
   // Create a new plan
-  router.post("/",  plans.create);
+  router.post("/", [authenticate],  plans.create);
 
   // Retrieve all plans
   router.get(
