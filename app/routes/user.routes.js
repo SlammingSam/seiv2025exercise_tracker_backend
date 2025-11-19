@@ -13,6 +13,8 @@
   // Retrieve a single User with id
   router.get("/:id",  users.findOne);
 
+  router.get("/:email", users.findOneByEmail);
+
   // Update a User with id
   router.put("/:id", users.update);
 
