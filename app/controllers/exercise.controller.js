@@ -5,10 +5,6 @@ const exports = {};
 // Create and Save a new exercise
 exports.create = (req, res) => {
   // Validate request
-    console.log('Exercise.create body:', req.body);
-    if (req.body.exercise_plan_id === undefined || req.body.exercise_plan_id === null) {
-      return res.status(400).send({ message: 'exercise_plan_id is required' });
-    }
 
   // Create a exercise
   const exercise = {

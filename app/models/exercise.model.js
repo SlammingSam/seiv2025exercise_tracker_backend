@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
 const Exercise = SequelizeInstance.define("exercise", {
-    exercise_id: {
+    id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,

@@ -8,7 +8,7 @@ exports.create = (req, res) => {
 
 
   // Create a Lesson
-  const team = {
+  const goal = {
     user_id: req.body.userId,
     goal_id: req.body.goalId,
     name: req.body.name,

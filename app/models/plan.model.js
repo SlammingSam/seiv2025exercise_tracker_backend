@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
 const Plan = SequelizeInstance.define("plan", {
-    plan_id: {
+  id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
