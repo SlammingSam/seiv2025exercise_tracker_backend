@@ -17,8 +17,8 @@ const exports = {};
 exports.login = async (req, res) => {
 
   var googleToken = req.body.credential;
-
   const client = new OAuth2Client(google_id);
+
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: googleToken,
@@ -30,39 +30,14 @@ exports.login = async (req, res) => {
   }
   await verify().catch(console.error);
 
-  //console.log(googleUser.email);//working
-  //console.log(googleUser.given_name);//working
-  //console.log(googleUser.family_name);//working
   let email = googleUser.email;
   let firstName = googleUser.given_name;
   let lastName = googleUser.family_name;
-  //console.log(email);//working
-  //console.log(firstName);//working
-  //console.log(lastName);//working
-
-  // if we don't have their email or name, we need to make another request
-  // this is solely for testing purposes
-  /*if (
-    (email === undefined ||
-      firstName === undefined ||
-      lastName === undefined) &&
-    req.body.accessToken !== undefined
-  ) {
-    let oauth2Client = new OAuth2Client(google_id); // create new auth client
-    oauth2Client.setCredentials({ access_token: req.body.accessToken }); // use the new auth client with the access_token
-    let oauth2 = google.oauth2({
-      auth: oauth2Client,
-      version: "v2",
-    });
-    let { data } = await oauth2.userinfo.get(); // get user info
-    console.log(data);
-    email = data.email;
-    firstName = data.given_name;
-    lastName = data.family_name;
-  }*/
-
+  let userPicture = googleUser.picture;
   let user = {};
   let session = {};
+
+  //console.log(userPicture);
 
   await User.findOne({
     where: {
@@ -78,16 +53,13 @@ exports.login = async (req, res) => {
           fName: firstName,
           lName: lastName,
           email: email,
+          picture: userPicture,
         };
       }
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
     });
-    //console.log(user.email);//working
-    //console.log(user.fName);//working
-    //console.log(user.lName);//working
-    //console.log("user ID =" + user.id);//working, auto included?
 
   // this lets us get the user id
   if (user.id === undefined) 
@@ -106,8 +78,6 @@ exports.login = async (req, res) => {
   } 
   else 
   {
-    //console.log(user.fName + " " + firstName); //working
-    //console.log(user.lName + " " + lastName);  //working
     // ensure that the user's name matches Google
     user.fName = firstName;
     user.lName = lastName;
@@ -120,9 +90,6 @@ exports.login = async (req, res) => {
       } else {
         console.log(`Cannot update User with id=${user.id}.`);
       }
-      //message that is getting sent to console, I modified and then removed it since it was blocking execution
-                                 //added this user being sent back with this response
-      //return res.status(200).send({ user: {user}, message: "User updated successfully!" });
     } 
     catch (err) 
     {
@@ -132,7 +99,6 @@ exports.login = async (req, res) => {
   }
 
   // try to find session first
-  //console.log("got here"); //working
   await Session.findOne({
     where: {
       email: email,
@@ -172,11 +138,13 @@ exports.login = async (req, res) => {
             lName: user.lName,
             userId: user.id,
             token: session.token,
+            picture: userPicture,
             // refresh_token: user.refresh_token,
             // expiration_date: user.expiration_date
           };
           console.log("found a session, don't need to make another one");
           console.log(userInfo);
+          destoryOldSessions(userInfo);
           res.send(userInfo);
         }
       }
@@ -188,7 +156,8 @@ exports.login = async (req, res) => {
       });
     });
 
-  if (session.id === undefined) {
+  if (session.id === undefined) 
+  {
     // create a new Session with an expiration date and save to database
     let token = jwt.sign({ id: email }, authconfig.secret, {
       expiresIn: 86400,
@@ -200,6 +169,7 @@ exports.login = async (req, res) => {
       email: email,
       userId: user.id,
       expirationDate: tempExpirationDate,
+      picture: userPicture,
     };
 
     console.log("making a new session");
@@ -213,19 +183,21 @@ exports.login = async (req, res) => {
           lName: user.lName,
           userId: user.id,
           token: token,
+          picture: userPicture,
           // refresh_token: user.refresh_token,
           // expiration_date: user.expiration_date
         };
         console.log("userInfo: " + userInfo);
+        destoryOldSessions(userInfo);
         res.send(userInfo);
       })
       .catch((err) => {
         res.status(500).send({ message: err.message });
       });
-  }
-};
+    }
+  };
 
-exports.authorize = async (req, res) => {
+  exports.authorize = async (req, res) => {
   console.log("authorize client");
   const oauth2Client = new google.auth.OAuth2(
     process.env.CLIENT_ID,
@@ -276,6 +248,7 @@ exports.authorize = async (req, res) => {
         expiration_date: user.expiration_date,
       };
       console.log(userInfo);
+      destoryOldSessions(userInfo);
       res.send(userInfo);
     })
     .catch((err) => {
@@ -285,6 +258,18 @@ exports.authorize = async (req, res) => {
   console.log(tokens);
   console.log(oauth2Client);
 };
+
+
+async function destoryOldSessions(userInfo) //trying to remove all of the expired keys for the old user sessions
+{
+  await Session.destroy({
+    where: {
+      email: userInfo.email,
+      [Op.or]: [{ token: "" }, { token: null }],//won't accept any other syntax, also dont know what Op.or is but its in Norths code
+    }
+  });
+}
+
 
 exports.logout = async (req, res) => {
   console.log(req.body);

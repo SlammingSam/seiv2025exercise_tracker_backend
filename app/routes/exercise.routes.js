@@ -4,7 +4,7 @@
   var router = Router()
 
   // Create a new plan
-  router.post("/",exercises.create);
+  router.post("/", [authenticate], exercises.create);
 
   // Retrieve all plans
   router.get(
@@ -14,17 +14,14 @@
   );
 
   // Retrieve all exercises from exercise plan
-  router.get(
-    "/exercise_planId",
-    exercises.findAllForExercisePlan
-  );
+  router.get("/exercise_planId", [authenticate], exercises.findAllForExercisePlan);
 
   //retrieve one exercise
-  router.get("/:id", exercises.findOne);
+  router.get("/:id",  [authenticate], exercises.findOne);
   // Update an exercise
-  router.put("/:id", exercises.update);
+  router.put("/:id",  [authenticate], exercises.update);
 
   // Delete a Lesson with id
-  router.delete("/:id", exercises.delete);
+  router.delete("/:id",  [authenticate], exercises.delete);
 
 export default router
