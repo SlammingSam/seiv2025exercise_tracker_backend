@@ -4,7 +4,7 @@
   var router = Router()
 
   // Create a new exercise plan for a user
-  router.post("/", exercise_plans.create);
+  router.post("/", [authenticate], exercise_plans.create);
 
   // Retrieve all exercise plans for a user
   router.get(

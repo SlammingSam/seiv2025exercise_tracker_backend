@@ -7,7 +7,11 @@
   router.post("/", [authenticate], exercises.create);
 
   // Retrieve all plans
-  router.get("/", [authenticate], exercises.findAll);
+  router.get(
+    "/",
+    
+    exercises.findAll
+  );
 
   // Retrieve all exercises from exercise plan
   router.get("/exercise_planId", [authenticate], exercises.findAllForExercisePlan);

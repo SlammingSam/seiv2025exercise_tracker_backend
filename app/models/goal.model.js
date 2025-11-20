@@ -18,7 +18,7 @@ const Goal = SequelizeInstance.define("goal", {
       type: Sequelize.ENUM,
       values: ['complete', 'in-progress', 'not started'],
       allowNull: true,
-      defaultValue: 'not started'
+      defaultValue: 'not started',
     },
     name: {
       type: Sequelize.STRING,
