@@ -36,6 +36,9 @@ const User = SequelizeInstance.define("user", {
     allowNull: true,
     defaultValue: 'Unset'
   },
+  picture: {
+    type: Sequelize.STRING,
+  }
   // refresh_token: {
   //   type: Sequelize.STRING(512),
   //   allowNull: true

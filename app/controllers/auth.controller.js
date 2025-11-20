@@ -33,9 +33,11 @@ exports.login = async (req, res) => {
   let email = googleUser.email;
   let firstName = googleUser.given_name;
   let lastName = googleUser.family_name;
-
+  let userPicture = googleUser.picture;
   let user = {};
   let session = {};
+
+  //console.log(userPicture);
 
   await User.findOne({
     where: {
@@ -51,6 +53,7 @@ exports.login = async (req, res) => {
           fName: firstName,
           lName: lastName,
           email: email,
+          picture: userPicture,
         };
       }
     })
@@ -135,6 +138,7 @@ exports.login = async (req, res) => {
             lName: user.lName,
             userId: user.id,
             token: session.token,
+            picture: userPicture,
             // refresh_token: user.refresh_token,
             // expiration_date: user.expiration_date
           };
@@ -165,6 +169,7 @@ exports.login = async (req, res) => {
       email: email,
       userId: user.id,
       expirationDate: tempExpirationDate,
+      picture: userPicture,
     };
 
     console.log("making a new session");
@@ -178,6 +183,7 @@ exports.login = async (req, res) => {
           lName: user.lName,
           userId: user.id,
           token: token,
+          picture: userPicture,
           // refresh_token: user.refresh_token,
           // expiration_date: user.expiration_date
         };

@@ -4,23 +4,19 @@
   var router = Router()
 
   // Create a new goal 
-  router.post("/", goals.create);
-   router.get("/",  goals.findAll);
+  router.post("/", [authenticate], goals.create);
+   router.get("/", [authenticate], goals.findAll);
 
   // Retrieve all goals for a user
   // Retrieve a single goal by ID
-  router.get(
-    "/:id",
-   
-    goals.findOne
-  );
+  router.get("/:id", [authenticate], goals.findOne);
 
   //retrieve all goals
 
   // Update a goal with id
-  router.put("/:id",  goals.update);
+  router.put("/:id", [authenticate], goals.update);
 
   // Delete a goal with id
-  router.delete("/:id",  goals.delete);
+  router.delete("/:id", [authenticate], goals.delete);
 
 export default router
