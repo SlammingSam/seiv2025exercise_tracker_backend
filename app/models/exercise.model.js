@@ -26,7 +26,8 @@ const Exercise = SequelizeInstance.define("exercise", {
     status: {
           type: Sequelize.ENUM,
           values: ['complete', 'in-progress', 'not started'],
-          allowNull: false,
+          allowNull: true,
+          defaultValue: 'not started',
         },
   });
    

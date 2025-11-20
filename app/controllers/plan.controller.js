@@ -98,7 +98,7 @@ exports.update = (req, res) => {
 // Delete a plan with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  plan.destroy({
+  Plan.destroy({
     where: { id: id },
   })
     .then((num) => {
