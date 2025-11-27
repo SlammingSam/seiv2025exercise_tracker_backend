@@ -206,7 +206,6 @@ exports.login = async (req, res) => {
   );
 
   console.log("authorize token");
-  // Get access and refresh tokens (if access_type is offline)
   let { tokens } = await oauth2Client.getToken(req.body.code);
   oauth2Client.setCredentials(tokens);
 
@@ -270,59 +269,52 @@ async function destoryOldSessions(userInfo) //trying to remove all of the expire
   });
 }
 
-
+// Log user out by clearing their session token
 exports.logout = async (req, res) => {
   console.log(req.body);
-  if (req.body === null) {
-    res.send({
-      message: "User has already been successfully logged out!",
+  if (!req.body || !req.body.token) { //check if null or missing token
+    return res.send({ 
+      message: "User has already been logged out or token is missing!",
     });
-    return;
   }
 
-  // invalidate session -- delete token out of session table
   let session = {};
 
-  await Session.findAll({ where: { token: req.body.token } })
-    .then((data) => {
-      if (data[0] !== undefined) session = data[0].dataValues;
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving sessions.",
+  try {
+    const data = await Session.findAll({ where: { token: req.body.token } });
+    if (data[0] !== undefined) {
+      session = data[0].dataValues;
+    } else {
+      console.log("already logged out");
+      return res.send({ //return if no session is found
+        message: "User has already been logged out!",
       });
-      return;
+    }
+  } catch (err) {
+    return res.status(500).send({ // return an error if something goes wrong (as always will happen)
+      message: err.message || "an error occurred while retrieving sessions.",
     });
+  }
 
   session.token = "";
 
-  // session won't be null but the id will if no session was found
-  if (session.id !== undefined) {
-    Session.update(session, { where: { id: session.id } })
-      .then((num) => {
-        if (num == 1) {
-          console.log("successfully logged out");
-          res.send({
-            message: "User has been successfully logged out!",
-          });
-        } else {
-          console.log("failed");
-          res.send({
-            message: `Error logging out user.`,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({
-          message: "Error logging out user.",
-        });
+  try {
+    const num = await Session.update(session, { where: { id: session.id } });
+    if (num == 1) {
+      console.log("successfully logged out");
+      return res.send({ 
+        message: "User has been logged out!",
       });
-  } else {
-    console.log("already logged out");
-    res.send({
-      message: "User has already been successfully logged out!",
+    } else {
+      console.log("failed");
+      return res.send({ 
+        message: `Error logging out user.`,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ 
+      message: "Error logging out user.",
     });
   }
 };
