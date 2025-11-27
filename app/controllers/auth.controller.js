@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
   try {
     const data = await User.create(user);
     user = data.dataValues;
-    return res.status(200).send({ message: "User was registered successfully!" });
+    //return res.status(200).send({ message: "User was registered successfully!" });
   } catch (err) {
     console.error("Error creating user:", err);
     return res.status(500).send({ message: err.message });
