@@ -9,10 +9,8 @@ exports.create = (req, res) => {
 
   // Create a Lesson
   const team = {
-    user_id: req.body.userId,
-    goal_id: req.body.goalId,
+    user_id: req.body.user_id,
     name: req.body.name,
-    status: req.body.status,
   };
   // Save Goal in the database
   Goal.create(goal)
