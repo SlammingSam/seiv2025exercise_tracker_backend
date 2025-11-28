@@ -69,8 +69,8 @@ exports.login = async (req, res) => {
   try {
     const data = await User.create(user);
     user = data.dataValues;
-    return res.status(200).send(user);
-    //this way I can get the user when its made.
+      // continue — do not return here so we can create a session for the new user
+      // previously returned the user immediately which prevented session creation
   } catch (err) {
     console.error("Error creating user:", err);
     return res.status(500).send({ message: err.message });
