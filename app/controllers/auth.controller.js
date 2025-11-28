@@ -71,6 +71,7 @@ exports.login = async (req, res) => {
     user = data.dataValues;
     return res.status(200).send(user);
     //this way I can get the user when its made.
+    //just an extra comment. for a push
   } catch (err) {
     console.error("Error creating user:", err);
     return res.status(500).send({ message: err.message });
