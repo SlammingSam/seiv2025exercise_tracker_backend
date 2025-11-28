@@ -13,6 +13,7 @@ exports.create = (req, res) => {
     reps: req.body.reps,
     status: req.body.status,
     exercise_plan_id: req.body.exercise_plan_id,
+    date: req.body.date,
   };
   // Save exercise in the database
   Exercise.create(exercise)
