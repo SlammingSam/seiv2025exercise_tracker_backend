@@ -34,6 +34,7 @@ exports.login = async (req, res) => {
   let firstName = googleUser.given_name;
   let lastName = googleUser.family_name;
   let userPicture = googleUser.picture;
+  let role = {};
   let user = {};
   let session = {};
 
@@ -54,6 +55,7 @@ exports.login = async (req, res) => {
           lName: lastName,
           email: email,
           picture: userPicture,
+          role: role,
         };
       }
     })
@@ -138,6 +140,7 @@ exports.login = async (req, res) => {
             fName: user.fName,
             lName: user.lName,
             userId: user.id,
+            role: user.role,
             token: session.token,
             picture: userPicture,
             // refresh_token: user.refresh_token,
@@ -171,6 +174,7 @@ exports.login = async (req, res) => {
       userId: user.id,
       expirationDate: tempExpirationDate,
       picture: userPicture,
+      role: user.role,
     };
 
     console.log("making a new session");
@@ -183,6 +187,7 @@ exports.login = async (req, res) => {
           fName: user.fName,
           lName: user.lName,
           userId: user.id,
+          role: user.role,
           token: token,
           picture: userPicture,
           // refresh_token: user.refresh_token,
