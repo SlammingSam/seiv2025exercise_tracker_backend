@@ -13,6 +13,7 @@ const Team = SequelizeInstance.define("team", {
     user_id: {
       type: Sequelize.INTEGER,
       allowNull: true,
+      defaultValue: null
     },
     //the id of the team
 

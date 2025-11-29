@@ -15,7 +15,7 @@ router.use("/", AuthRoutes);
 router.use("/users", UserRoutes);
 router.use("/goals", GoalRoutes);
 router.use("/plans", PlanRoutes);
-router.user("/teams", TeamRoutes)
+router.use("/teams", TeamRoutes)
 router.use("/exercises", ExerciseRoutes);
 router.use("/exercise_plans", ExercisePlanRoutes)
 
