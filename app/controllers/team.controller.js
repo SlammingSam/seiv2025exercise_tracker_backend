@@ -1,21 +1,19 @@
 import db from"../models/index.js"
-const Goal = db.goal;
+const Team = db.team;
 const Op = db.Sequelize.Op;
 const exports = {};
-// Create and Save a new goal
+// Create and Save a new Team
 exports.create = (req, res) => {
   // Validate request
 
 
   // Create a Lesson
   const team = {
-    user_id: req.body.userId,
-    goal_id: req.body.goalId,
+    user_id: req.body.user_id,
     name: req.body.name,
-    status: req.body.status,
   };
-  // Save Goal in the database
-  Goal.create(goal)
+  // Save Team in the database
+  Team.create(team)
     .then((data) => {
       res.send(data);
     })
@@ -26,9 +24,9 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all goals from the database.
+// Retrieve all Teams from the database.
 exports.findAll = (req, res) => {
-  Goal.findAll()
+  Team.findAll()
     .then((data) => {
       res.send(data);
     })
@@ -38,11 +36,11 @@ exports.findAll = (req, res) => {
       });
     });
 };
-// Retrieve all goals for a user from the database.
+// Retrieve all Teams for a user from the database.
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
 
-  Goal.findAll({ where: { userId: userId } })
+  Team.findAll({ where: { userId: userId } })
     .then((data) => {
       res.send(data);
     })
@@ -52,10 +50,10 @@ exports.findAllForUser = (req, res) => {
       });
     });
 };
-// Find a single goal_id with an id
+// Find a single Team_id with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Goal.findByPk(id)
+  Team.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
@@ -71,10 +69,10 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// Update a Goal by the id in the request
+// Update a Team by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Goal.update(req.body, {
+  Team.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -97,7 +95,7 @@ exports.update = (req, res) => {
 // Delete a Lesson with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Goal.destroy({
+  Team.destroy({
     where: { id: id },
   })
     .then((num) => {

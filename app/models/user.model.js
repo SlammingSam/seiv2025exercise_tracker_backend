@@ -13,7 +13,7 @@ const User = SequelizeInstance.define("user", {
         allowNull: true,
         references:{
             model: 'teams',
-            key: 'team_id',
+            key: 'id',
           }
         },
   
