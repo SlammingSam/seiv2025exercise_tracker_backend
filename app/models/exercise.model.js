@@ -25,14 +25,14 @@ const Exercise = SequelizeInstance.define("exercise", {
       type: Sequelize.INTEGER,
     },
     status: {
-          type: Sequelize.ENUM,
-          values: ['complete', 'in-progress', 'not started'],
-          allowNull: true,
-          defaultValue: 'not started',
-        },
+      type: Sequelize.ENUM,
+      values: ['complete', 'in-progress', 'not started'],
+      allowNull: true,
+      defaultValue: 'not started',
+    },
     date: {
       type: Sequelize.ENUM,
-      values: ['Sunday', 'Monday', 'Tuesday', 'WednesDay', 'Thursday', 'Friday', 'Saturday'],
+      values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       allowNull: true,
       defaultValue: null,
 
