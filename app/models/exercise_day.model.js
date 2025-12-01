@@ -26,9 +26,9 @@ const Exercise_Day = SequelizeInstance.define("exercise_day", {
   
     day: {
           type: Sequelize.ENUM,
-          values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Unset'],
           allowNull: true,
-          defaultValue: 'Sunday',
+          defaultValue: 'Unset',
         },
   });
    
