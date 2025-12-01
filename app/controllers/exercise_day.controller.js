@@ -1,3 +1,4 @@
+import e from "express";
 import db from"../models/index.js"
 const Exercise_Day = db.exercise_day;
 const Op = db.Sequelize.Op;
@@ -9,7 +10,8 @@ exports.create = (req, res) => {
   // Create a Exercise_Day
   const exercise_day = {
    day: req.body.day,
-    exercise_id: req.body.exercise_id
+    exercise_id: req.body.exercise_id,
+    exercise_plan_id: req.body.exercise_plan_id
   }
   // Save Exercise_Day in the database
   Exercise_Day.create(exercise_day)

@@ -7,7 +7,7 @@ import PlanRoutes from "./plan.routes.js";
 import ExerciseRoutes from "./exercise.routes.js"
 import ExercisePlanRoutes from "./exercise_plan.routes.js"
 import TeamRoutes from "./team.routes.js"
-
+import ExerciseDays from "./exercise_day.route.js";
 
 const router = Router();
 
@@ -18,5 +18,6 @@ router.use("/plans", PlanRoutes);
 router.use("/teams", TeamRoutes)
 router.use("/exercises", ExerciseRoutes);
 router.use("/exercise_plans", ExercisePlanRoutes)
+router.use("/exercise_days", ExerciseDays)
 
 export default router;
