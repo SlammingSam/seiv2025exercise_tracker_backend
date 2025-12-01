@@ -9,7 +9,17 @@ const Goal = SequelizeInstance.define("goal", {
             key: 'id',
           }
         },
-    goal_id: {
+        team_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          defaultValue: null,
+          references:{
+            model: 'teams',
+            key: 'id',
+          }
+          
+        },
+    id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,

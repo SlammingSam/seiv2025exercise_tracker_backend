@@ -1,45 +1,44 @@
 import Sequelize from "sequelize";
 import SequelizeInstance from "../config/sequelizeInstance.js";
 
-const Exercise_Plan = SequelizeInstance.define("exercise_plan", {
+const Plan_Assignment = SequelizeInstance.define("plan_assignment", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
-
       autoIncrement: true //cant auto increment a composite key JULIANNNNNNNNNNNNNNNNNNNNNNNNNNNNNN!
     },
-    plan_id: {
+    team_id: {
       type: Sequelize.INTEGER,
       //primaryKey: true,
  allowNull: true,
       defaultValue: null,
       references:{
-        model: 'plans',
+        model: 'teams',
+        key: 'id',
+      }
+    },
+    exercise_plan_id: {
+      type: Sequelize.INTEGER,
+      //primaryKey: true,
+ allowNull: true,
+      defaultValue: null,
+      references:{
+        model: 'exercise_plans',
         key: 'id',
       }
     },
     //discuss whether you want exercise plans to have multiple goals. 
-    goal_id: {
-      allowNull: true,
-      defaultValue: null,
+     start_date: {
       type: Sequelize.INTEGER,
-      references:{
-        model: 'goals',
-        key: 'id',
-      },
-
+      primaryKey: true,
+     
     },
-    
-         user_id: {
-      allowNull: true,
-      defaultValue: null,
+     end_date: {
       type: Sequelize.INTEGER,
-      references:{
-        model: 'users',
-        key: 'id',
-      },
+      primaryKey: true,
+   
     },
          
   });
    
-export default Exercise_Plan;
+export default Plan_Assignment;

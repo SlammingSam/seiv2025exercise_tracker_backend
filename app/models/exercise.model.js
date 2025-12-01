@@ -7,14 +7,6 @@ const Exercise = SequelizeInstance.define("exercise", {
       primaryKey: true,
       autoIncrement: true,
     },
-    exercise_plan_id: {
-      allowNull: true,
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'exercise_plans',
-        key: 'exercise_plan_id',
-      },
-    },
     name: {
       type: Sequelize.STRING,
     },
