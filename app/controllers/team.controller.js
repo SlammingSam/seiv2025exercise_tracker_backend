@@ -101,11 +101,11 @@ exports.delete = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Lesson was deleted successfully!",
+          message: "Team was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Lesson with id=${id}. Maybe Lesson was not found!`,
+          message: `Cannot delete Team with id=${id}. Maybe Team was not found!`,
         });
       }
     })

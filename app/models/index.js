@@ -12,7 +12,9 @@ import Goal from "./goal.model.js";
 import Plan from "./plan.model.js"; 
 import Exercise from "./exercise.model.js";
 import Exercise_Plan from "./exercise_plan.model.js"
+import Exercise_Day from "./exercise_day.model.js"
 import Team from "./team.model.js";
+import Plan_Assignment from "./plan_assignment.model.js";
 
 
 const db = {};
@@ -25,7 +27,9 @@ db.goal = Goal;
 db.plan = Plan;
 db.exercise_plan = Exercise_Plan;
 db.exercise = Exercise;
+db.exercise_day = Exercise_Day;
 db.team = Team;
+db.plan_assignment = Plan_Assignment
 
 // foreign key for session
 // foreign key for session
@@ -48,8 +52,8 @@ db.exercise_plan.belongsTo(db.goal, { as: "goal", foreignKey: "goal_id", onDelet
 
 
 // foreign key for teams
-db.team.hasMany(db.user, { as: "users", foreignKey: "team_id", onDelete: "CASCADE", foreignKeyConstraint: true });
-db.user.belongsTo(db.team, { as: "team", foreignKey: "team_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.team.hasMany(db.user, { as: "users", foreignKey: "team_id", onDelete: "SET NULL", foreignKeyConstraint: true });
+db.user.belongsTo(db.team, { as: "team", foreignKey: "team_id", onDelete: "SET NULL", foreignKeyConstraint: true });
 // team may reference an owner user (user_id) but create the constraint without enforcing
 // at sync time to avoid circular FK creation. This sets up the association but disables
 // automatic constraint creation so Sequelize won't try to create both FKs in a cycle.
