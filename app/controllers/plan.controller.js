@@ -67,7 +67,7 @@ exports.findAllForUser = async (req, res) => {
           model: db.exercise_plan,
           as: "exercise_plans",
           where: { user_id: userId },
-          attributes: [], // hide the join table rows
+          attributes: ["id"], // hide the join table rows
           required: true  // INNER JOIN
         }
       ]

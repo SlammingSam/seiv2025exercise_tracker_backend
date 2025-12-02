@@ -96,6 +96,54 @@ exports.findAllForExercisePlan = async (req, res) => {
     });
   }
 };
+exports.resetSchedule = async (req, res) => {
+  try {
+    const { exercise_plan_id } = req.params; // <-- updated to match router
+
+    if (!exercise_plan_id) {
+      return res.status(400).json({ error: "Exercise plan ID is required." });
+    }
+
+    // 1. Find all exercise_day rows for this exercise plan
+    const allDays = await Exercise_Day.findAll({
+      where: { exercise_plan_id },
+      order: [["id", "ASC"]], // keep the first occurrence
+    });
+
+    // 2. Keep only the first occurrence of each exercise_id, mark others for deletion
+    const seen = new Set();
+    const idsToDelete = [];
+    const idsToUpdate = [];
+
+    allDays.forEach(row => {
+      if (!seen.has(row.exercise_id)) {
+        seen.add(row.exercise_id);
+        idsToUpdate.push(row.id); // keep this one, reset day
+      } else {
+        idsToDelete.push(row.id); // duplicate → delete
+      }
+    });
+
+    // 3. Delete duplicates
+    if (idsToDelete.length > 0) {
+      await Exercise_Day.destroy({ where: { id: idsToDelete } });
+    }
+
+    // 4. Reset day to "Unset" for remaining
+    if (idsToUpdate.length > 0) {
+      await Exercise_Day.update(
+        { day: "Unset" },
+        { where: { id: idsToUpdate } }
+      );
+    }
+
+    res.status(200).json({ message: "Schedule reset successfully." });
+  } catch (error) {
+    console.error("Reset schedule error:", error);
+    res.status(500).json({ error: "Failed to reset schedule." });
+  }
+};
+
 
 // Update a Exercise_Day by the id in the request
 exports.update = (req, res) => {

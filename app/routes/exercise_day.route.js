@@ -8,9 +8,14 @@
 
   //this gets all the exercise plans linked with days for a plan. 
 router.get(
-  "/exercise-plan/:exercise_plan_id",
+  "/exercise_plans/:exercise_plan_id",
   exercise_days.findAllForExercisePlan
 );
+router.delete(
+  "/reset/:exercise_plan_id",
+  exercise_days.resetSchedule
+);
+
 
   // Retrieve a single exercise plan by ID
   router.get("/:id", [authenticate], exercise_days.findOne);
