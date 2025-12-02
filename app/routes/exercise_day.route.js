@@ -9,7 +9,6 @@
   //this gets all the exercise plans linked with days for a plan. 
 router.get(
   "/exercise-plan/:exercise_plan_id",
-  [authenticate],
   exercise_days.findAllForExercisePlan
 );
 

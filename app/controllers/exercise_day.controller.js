@@ -81,7 +81,7 @@ exports.findAllForExercisePlan = async (req, res) => {
       where: { exercise_plan_id: exercisePlanId },
       include: [
         {
-          model: Exercise,
+          model: db.exercise,
           as: "exercise",  // MUST match association
           attributes: ["id", "name", "sets", "reps", "status"]
         }
