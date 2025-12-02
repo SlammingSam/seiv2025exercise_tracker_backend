@@ -42,9 +42,10 @@ db.user.hasMany(db.goal, { as: "goal", foreignKey: "user_id", onDelete: "CASCADE
 db.goal.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 //foreign key for plans
 // foreign key for plans
-db.user.hasMany(db.plan, { as: "plan", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
-db.plan.belongsTo(db.user, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
+db.exercise_plan.belongsTo(db.plan, { as: "plan", foreignKey: "plan_id" });
+db.plan.hasMany(db.exercise_plan, { as: "exercise_plans", foreignKey: "plan_id" });
 
+db.user.hasMany(db.exercise_plan, { as: "user", foreignKey: "user_id", onDelete: "CASCADE", foreignKeyConstraint: true });
 //foreign key for exercise plans
 // foreign key for exercise plans
 db.goal.hasMany(db.exercise_plan, { as: "exercise_plan", foreignKey: "goal_id", onDelete: "CASCADE", foreignKeyConstraint: true, allowNull: true});
@@ -57,8 +58,6 @@ db.user.belongsTo(db.team, { as: "team", foreignKey: "team_id", onDelete: "SET N
 // team may reference an owner user (user_id) but create the constraint without enforcing
 // at sync time to avoid circular FK creation. This sets up the association but disables
 // automatic constraint creation so Sequelize won't try to create both FKs in a cycle.
-db.exercise_plan.hasMany(db.exercise,{as:"exercises", foreignKey:"exercise_plan_id", onDelete:"CASCADE", foreignKeyConstraint:true, allowNull:true});
-db.plan.hasMany(db.exercise_plan,{as:"exercise_plans", foreignKey:"plan_id", onDelete:"CASCADE", foreignKeyConstraint:true, allowNull:true});
 
 
 

@@ -4,13 +4,16 @@
   var router = Router()
 
   // Create a new plan
+  // Retrieve all plans for a specific user
+router.get("/user/:userId", plans.findAllForUser);
+
   router.post("/", [authenticate], plans.create);
 
   // Retrieve all plans
   router.get("/", [authenticate], plans.findAll);
 
   // Retrieve all plans from exercise plan
-  router.get("/:exercise_planId", [authenticate], plans.findAllForExercisePlan);
+
 
   //retrieve one all plan
   router.get("/:id", [authenticate], plans.findOne);
