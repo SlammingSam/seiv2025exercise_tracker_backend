@@ -6,6 +6,12 @@
   // Create a new exercise plan for a user
   router.post("/", exercise_days.create);
 
+  //this gets all the exercise plans linked with days for a plan. 
+router.get(
+  "/exercise-plan/:exercise_plan_id",
+  [authenticate],
+  exercise_days.findAllForExercisePlan
+);
 
   // Retrieve a single exercise plan by ID
   router.get("/:id", [authenticate], exercise_days.findOne);

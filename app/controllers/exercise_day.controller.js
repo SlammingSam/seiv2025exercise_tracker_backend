@@ -71,6 +71,32 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
+// Get all exercise days (and exercises) for an exercise_plan
+exports.findAllForExercisePlan = async (req, res) => {
+  try {
+    const exercisePlanId = req.params.exercise_plan_id;
+
+    const days = await Exercise_Day.findAll({
+      where: { exercise_plan_id: exercisePlanId },
+      include: [
+        {
+          model: Exercise,
+          as: "exercise",  // MUST match association
+          attributes: ["id", "name", "sets", "reps", "status"]
+        }
+      ],
+      order: [["day", "ASC"]] // optional sorting
+    });
+
+    res.send(days);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Failed to retrieve exercise days."
+    });
+  }
+};
+
 // Update a Exercise_Day by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;

@@ -59,6 +59,27 @@ db.user.belongsTo(db.team, { as: "team", foreignKey: "team_id", onDelete: "SET N
 // at sync time to avoid circular FK creation. This sets up the association but disables
 // automatic constraint creation so Sequelize won't try to create both FKs in a cycle.
 
+//other associations... careful here.
+// ExercisePlan 1 <- many ExerciseDay
+Exercise_Plan.hasMany(Exercise_Day, {
+  foreignKey: "exercise_plan_id",
+  as: "exercise_days"
+});
+
+Exercise_Day.belongsTo(Exercise_Plan, {
+  foreignKey: "exercise_plan_id",
+});
+
+// Exercise 1 <- many ExerciseDay
+Exercise.hasMany(Exercise_Day, {
+  foreignKey: "exercise_id",
+  as: "exercise_days"
+});
+
+Exercise_Day.belongsTo(Exercise, {
+  foreignKey: "exercise_id",
+  as: "exercise"
+});
 
 
 export default db;
