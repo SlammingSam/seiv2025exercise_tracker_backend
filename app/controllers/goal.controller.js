@@ -9,10 +9,10 @@ exports.create = (req, res) => {
 
   // Create a Lesson
   const goal = {
-    user_id: req.body.userId,
-    goal_id: req.body.goalId,
-    name: req.body.name,
-    status: req.body.status,
+    user_id: req.body.user_id,
+  team_id: req.body.teamId,
+  name: req.body.name,
+  status: req.body.status,
   };
   // Save Goal in the database
   Goal.create(goal)
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
 
-  Goal.findAll({ where: { userId: userId } })
+  Goal.findAll({ where: { user_id: userId } })
     .then((data) => {
       res.send(data);
     })
@@ -52,6 +52,21 @@ exports.findAllForUser = (req, res) => {
       });
     });
 };
+
+// Retrieve all goals for a team
+exports.findAllForTeam = (req, res) => {
+  const teamId = req.params.teamId;
+
+  Goal.findAll({ where: { team_id: teamId } })
+    .then((data) => res.send(data))
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving team goals.",
+      });
+    });
+};
+
 // Find a single goal_id with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

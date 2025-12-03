@@ -6,6 +6,7 @@
   // Create a new plan
   // Retrieve all plan_assignments for a specific user
 
+router.get("/team/:team_id", plan_assignments.findByTeam);
 
   router.post("/", plan_assignments.create);
 
