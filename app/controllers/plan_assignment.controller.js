@@ -27,6 +27,23 @@ exports.create = (req, res) => {
       });
     });
 };
+exports.findByTeam = async (req, res) => {
+  try {
+    const teamId = req.params.team_id;
+
+    const plans = await Plan_Assignment.findAll({
+      where: { team_id: teamId }
+    });
+
+    res.send(plans);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to retrieve plan assignments." });
+  }
+};
+
+
 // Retrieve all goals from the database.
 exports.findAll = (req, res) => {
   const Plan_AssignmentId = req.params.Plan_AssignmentId;

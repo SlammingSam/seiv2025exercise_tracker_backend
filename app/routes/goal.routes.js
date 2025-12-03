@@ -4,6 +4,8 @@
   var router = Router()
 
   // Create a new goal 
+  router.get("/team/:teamId", goals.findAllForTeam);
+
   router.post("/", [authenticate], goals.create);
    router.get("/", [authenticate], goals.findAll);
 
