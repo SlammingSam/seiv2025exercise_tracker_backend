@@ -16,7 +16,6 @@ import Exercise_Day from "./exercise_day.model.js"
 import Team from "./team.model.js";
 import Plan_Assignment from "./plan_assignment.model.js";
 
-
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
