@@ -32,7 +32,7 @@ const User = SequelizeInstance.define("user", {
   },
   role: {
     type: Sequelize.ENUM,
-    values:['Athlete', 'Coach', 'Unset'],
+    values:['Athlete', 'Coach', 'Admin', 'Unset'],
     allowNull: true,
     defaultValue: 'Unset'
   },
