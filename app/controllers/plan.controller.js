@@ -39,6 +39,8 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
 // Retrieve all goals for a user from the database.
 exports.findAllForExercisePlan = (req, res) => {
   const exercisePlanId = req.params.exercisePlanId;
@@ -53,6 +55,32 @@ exports.findAllForExercisePlan = (req, res) => {
       });
     });
 };
+
+// Retrieve all plans for a specific user
+exports.findAllForUser = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const plans = await Plan.findAll({
+      include: [
+        {
+          model: db.exercise_plan,
+          as: "exercise_plans",
+          where: { user_id: userId },
+          attributes: ["id"], // hide the join table rows
+          required: true  // INNER JOIN
+        }
+      ]
+    });
+
+    res.send(plans);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving plans for the user."
+    });
+  }
+};
+
 // Find a single goal_id with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;

@@ -15,11 +15,20 @@ const Exercise_Day = SequelizeInstance.define("exercise_day", {
         key: 'id',
       },
     },
+    exercise_plan_id: {
+      allowNull: true,
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'exercise_plans',
+        key: 'id',
+      },
+    },
+  
     day: {
           type: Sequelize.ENUM,
-          values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Unset'],
           allowNull: true,
-          defaultValue: 'Sunday',
+          defaultValue: 'Unset',
         },
   });
    

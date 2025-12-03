@@ -1,0 +1,32 @@
+  import exercise_days from "../controllers/exercise_day.controller.js";
+  import authenticate from "../authorization/authorization.js";
+  import { Router } from "express";
+  var router = Router()
+
+  // Create a new exercise plan for a user
+  router.post("/", exercise_days.create);
+
+  //this gets all the exercise plans linked with days for a plan. 
+router.get(
+  "/exercise_plans/:exercise_plan_id",
+  exercise_days.findAllForExercisePlan
+);
+router.delete(
+  "/reset/:exercise_plan_id",
+  exercise_days.resetSchedule
+);
+
+
+  // Retrieve a single exercise plan by ID
+  router.get("/:id", [authenticate], exercise_days.findOne);
+
+  //retrieve all exercise_days
+  router.get("/",  [authenticate], exercise_days.findAll);
+
+  // Update a goal with id
+  router.put("/:id",  [authenticate], exercise_days.update);
+
+  // Delete a goal with id
+  router.delete("/:id",  [authenticate], exercise_days.delete);
+
+export default router

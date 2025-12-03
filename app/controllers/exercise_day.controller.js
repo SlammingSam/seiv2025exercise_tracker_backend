@@ -1,3 +1,4 @@
+import e from "express";
 import db from"../models/index.js"
 const Exercise_Day = db.exercise_day;
 const Op = db.Sequelize.Op;
@@ -9,7 +10,8 @@ exports.create = (req, res) => {
   // Create a Exercise_Day
   const exercise_day = {
    day: req.body.day,
-    exercise_id: req.body.exercise_id
+    exercise_id: req.body.exercise_id,
+    exercise_plan_id: req.body.exercise_plan_id
   }
   // Save Exercise_Day in the database
   Exercise_Day.create(exercise_day)
@@ -69,6 +71,80 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
+// Get all exercise days (and exercises) for an exercise_plan
+exports.findAllForExercisePlan = async (req, res) => {
+  try {
+    const exercisePlanId = req.params.exercise_plan_id;
+
+    const days = await Exercise_Day.findAll({
+      where: { exercise_plan_id: exercisePlanId },
+      include: [
+        {
+          model: db.exercise,
+          as: "exercise",  // MUST match association
+          attributes: ["id", "name", "sets", "reps", "status"]
+        }
+      ],
+      order: [["day", "ASC"]] // optional sorting
+    });
+
+    res.send(days);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Failed to retrieve exercise days."
+    });
+  }
+};
+exports.resetSchedule = async (req, res) => {
+  try {
+    const { exercise_plan_id } = req.params; // <-- updated to match router
+
+    if (!exercise_plan_id) {
+      return res.status(400).json({ error: "Exercise plan ID is required." });
+    }
+
+    // 1. Find all exercise_day rows for this exercise plan
+    const allDays = await Exercise_Day.findAll({
+      where: { exercise_plan_id },
+      order: [["id", "ASC"]], // keep the first occurrence
+    });
+
+    // 2. Keep only the first occurrence of each exercise_id, mark others for deletion
+    const seen = new Set();
+    const idsToDelete = [];
+    const idsToUpdate = [];
+
+    allDays.forEach(row => {
+      if (!seen.has(row.exercise_id)) {
+        seen.add(row.exercise_id);
+        idsToUpdate.push(row.id); // keep this one, reset day
+      } else {
+        idsToDelete.push(row.id); // duplicate → delete
+      }
+    });
+
+    // 3. Delete duplicates
+    if (idsToDelete.length > 0) {
+      await Exercise_Day.destroy({ where: { id: idsToDelete } });
+    }
+
+    // 4. Reset day to "Unset" for remaining
+    if (idsToUpdate.length > 0) {
+      await Exercise_Day.update(
+        { day: "Unset" },
+        { where: { id: idsToUpdate } }
+      );
+    }
+
+    res.status(200).json({ message: "Schedule reset successfully." });
+  } catch (error) {
+    console.error("Reset schedule error:", error);
+    res.status(500).json({ error: "Failed to reset schedule." });
+  }
+};
+
+
 // Update a Exercise_Day by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
