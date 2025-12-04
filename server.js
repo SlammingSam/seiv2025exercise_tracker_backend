@@ -5,7 +5,7 @@ import cors from "cors";
 import db  from "./app/models/index.js";
 
 import routes from "./app/routes/index.js";
-
+//this comment is to re update.
 db.sequelize.sync();
 
 const app = express();
