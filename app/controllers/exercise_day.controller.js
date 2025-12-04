@@ -11,7 +11,8 @@ exports.create = (req, res) => {
   const exercise_day = {
    day: req.body.day,
     exercise_id: req.body.exercise_id,
-    exercise_plan_id: req.body.exercise_plan_id
+    exercise_plan_id: req.body.exercise_plan_id,
+    status: req.body.status
   }
   // Save Exercise_Day in the database
   Exercise_Day.create(exercise_day)
@@ -83,7 +84,7 @@ exports.findAllForExercisePlan = async (req, res) => {
         {
           model: db.exercise,
           as: "exercise",  // MUST match association
-          attributes: ["id", "name", "sets", "reps", "status"]
+          attributes: ["id", "name", "sets", "reps"]
         }
       ],
       order: [["day", "ASC"]] // optional sorting
