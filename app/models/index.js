@@ -15,6 +15,7 @@ import Exercise_Plan from "./exercise_plan.model.js"
 import Exercise_Day from "./exercise_day.model.js"
 import Team from "./team.model.js";
 import Plan_Assignment from "./plan_assignment.model.js";
+import Exercise_Status from "./exercise_status.model.js";
 
 const db = {};
 db.Sequelize = Sequelize;
@@ -29,6 +30,7 @@ db.exercise = Exercise;
 db.exercise_day = Exercise_Day;
 db.team = Team;
 db.plan_assignment = Plan_Assignment
+db.exercise_status = Exercise_Status
 
 // foreign key for session
 // foreign key for session

@@ -3,30 +3,65 @@ import express, { json, urlencoded } from "express"
 const Plan_Assignment = db.plan_assignment;
 const Op = db.Sequelize.Op;
 const exports = {};
-// Create and Save a new Plan_Assignment
-exports.create = (req, res) => {
-  // Validate request
 
-  // Create a Plan_Assignment
-  const plan_assignment = {
-    id: req.body.id,
-    team_id: req.body.team_id,
-    exercise_plan_id: req.body.exercise_plan_id,
-    start_date: req.body.start_date,
-    end_date: req.body.end_date
-  };
-  // Save Goal in the database
-  Plan_Assignment.create(plan_assignment)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Plan_Assignments.",
-      });
+
+exports.create = async (req, res) => {
+  try {
+    const plan_assignment = {
+      id: req.body.id,
+      team_id: req.body.team_id,
+      exercise_plan_id: req.body.exercise_plan_id,
+      start_date: req.body.start_date,
+      end_date: req.body.end_date
+    };
+
+    // 1. create assignment
+    const assignment = await Plan_Assignment.create(plan_assignment);
+
+    // 2. get all users on this team
+    const members = await db.user.findAll({
+      where: { team_id: assignment.team_id }
     });
+    
+    // 3. get all exercise_days in this exercise plan
+    const days = await db.exercise_day.findAll({
+      where: { exercise_plan_id: assignment.exercise_plan_id }
+    });
+
+    for (const member of members) {
+      for (const day of days) {
+
+        // Check if status is already created
+        const exists = await db.exercise_status.findOne({
+          where: {
+            user_id: member.id,
+            exercise_day_id: day.id
+          }
+        });
+
+        if (!exists) {
+          console.log("creating")
+          await db.exercise_status.create({
+            user_id: member.id,
+            exercise_day_id: day.id,
+            status: "not started"
+          });
+        }
+      }
+    }
+
+    res.send(assignment);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Plan_Assignment."
+    });
+  }
 };
+
+
+
 exports.findByTeam = async (req, res) => {
   try {
     const teamId = req.params.team_id;

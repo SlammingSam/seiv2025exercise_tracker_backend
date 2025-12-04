@@ -12,7 +12,6 @@ exports.create = (req, res) => {
    day: req.body.day,
     exercise_id: req.body.exercise_id,
     exercise_plan_id: req.body.exercise_plan_id,
-    status: req.body.status
   }
   // Save Exercise_Day in the database
   Exercise_Day.create(exercise_day)
