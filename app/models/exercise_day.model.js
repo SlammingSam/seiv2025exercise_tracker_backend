@@ -30,6 +30,12 @@ const Exercise_Day = SequelizeInstance.define("exercise_day", {
           allowNull: true,
           defaultValue: 'Unset',
         },
+          status: {
+          type: Sequelize.ENUM,
+          values: ['complete', 'in-progress', 'not started'],
+          allowNull: true,
+          defaultValue: 'not started',
+        },
   });
    
 export default Exercise_Day;

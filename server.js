@@ -6,7 +6,7 @@ import db  from "./app/models/index.js";
 
 import routes from "./app/routes/index.js";
 
-db.sequelize.sync({alter: true});
+db.sequelize.sync();
 
 const app = express();
 

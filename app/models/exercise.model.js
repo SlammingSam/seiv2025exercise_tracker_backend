@@ -15,13 +15,7 @@ const Exercise = SequelizeInstance.define("exercise", {
     },
     reps: {
       type: Sequelize.INTEGER,
-    },
-    status: {
-          type: Sequelize.ENUM,
-          values: ['complete', 'in-progress', 'not started'],
-          allowNull: true,
-          defaultValue: 'not started',
-        },
+    }
   });
    
 export default Exercise;
